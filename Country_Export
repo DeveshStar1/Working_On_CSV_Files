@@ -1,0 +1,51 @@
+//Accessing the data of import/export from CSV file
+//performing some operations like getting the country who export coffee
+
+
+
+
+
+
+
+import edu.duke.*;
+
+import org.apache.commons.csv.*;
+
+public class countriesExport
+ 
+{
+ 
+   public void listExporters(CSVParser parser,String exportOfInterest)
+     {
+           
+         for(CSVRecord record:parser)//for each row in CSV file
+
+         {
+             
+            String export=record.get("Exports");
+           if(export.contains(exportOfInterest))
+           {
+          String country = record.get("Country");      
+          System.out.println(country);
+          
+        }
+        
+
+        }
+       
+     }
+
+    public void whoExportsGD()
+
+     {
+
+          FileResource fr = new FileResource();//For popping up the file to select
+
+          CSVParser parser = fr.getCSVParser();
+
+          listExporters(parser,"coffee");
+
+     }
+    
+}
+
