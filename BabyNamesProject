@@ -1,0 +1,121 @@
+//Access the bay names data from US govt csv files and perform some operations
+//using java
+//solving Real problems
+
+
+import edu.duke.*;
+import org.apache.commons.csv.*;
+import java.io.*;
+public class DataOverview 
+{
+    public void totalBirths(FileResource fr)
+    {
+        int total=0;
+        int totalBoys=0;
+        int totalGirls=0;
+        int ctr=0,ctr1=0;
+        for(CSVRecord rec:fr.getCSVParser(false))//No Header Row 
+        {   
+       
+            int numBorn = Integer.parseInt(rec.get(2));
+            total = total + numBorn;
+            if(rec.get(1).equals("M"))
+            { 
+                ctr++;
+                totalBoys = totalBoys + numBorn;
+            }
+            else
+            {
+                ctr1++;
+                totalGirls = totalGirls + numBorn;
+                 
+            }
+           
+        }
+       
+        System.out.println("Total Numbers ="+total);
+        System.out.println("Total Boys ="+totalBoys +" Number of boy's names are "+ctr);
+        System.out.println("Total Girls ="+totalGirls+" Number Of Girl's names are "+ctr1);
+    }
+    public void Rank()
+    {
+      FileResource fr = new FileResource();
+       int ctr=0;
+      for(CSVRecord rec: fr.getCSVParser(false))//No Header Row 
+      {   
+         ctr++;
+         if(rec.get(0).equals("Robert"))
+         {
+             System.out.println("Rank "+ctr+" Name "+rec.get(0)+ " Number "+rec.get(2));
+        }
+        
+      } 
+    }
+    public void avgRank()
+    {    
+        int sum=0;
+        DirectoryResource dr = new DirectoryResource();
+        for(File f:dr.selectedFiles())
+        {
+            FileResource fr = new FileResource(f);
+            int ctr=0;
+              for(CSVRecord rec:fr.getCSVParser(false))//No Header Row 
+              {
+                 if(rec.get(1).equals("M"))
+                 { 
+                  ctr++;
+                   if(rec.get(0).equals("Robert"))
+                   {
+                    sum=sum+ctr;
+                   }
+                 }
+               
+             }
+             System.out.println("Sum is "+sum);
+        }
+        double avg = sum/135;
+        System.out.println("Average age of Susan is "+avg+" Total Sum is "+sum);
+    }
+    public void highRank()
+    {    
+        
+        DirectoryResource dr = new DirectoryResource();
+        int ctr1=0,min=150;
+        for(File f:dr.selectedFiles())
+        {
+            FileResource fr = new FileResource(f);
+            int ctr=0;
+              for(CSVRecord rec:fr.getCSVParser(false))//No Header Row 
+              {
+                
+                 if(rec.get(1).equals("M"));
+                 {
+                    ctr++;
+                    if(rec.get(1).equals("M") && rec.get(0).equals("Mich"))
+                    {  
+                       ctr1++;
+                       if(ctr<min)
+                       {
+                           min=ctr;
+                        }
+                       System.out.println("Rank of Mich is "+ ctr + " in year "+ctr1);
+                   
+                    }
+                }
+               
+             }
+            
+        }
+        System.out.println("Highest Rank is "+min);
+       
+    }
+        
+    public void test()
+    {
+      FileResource fr = new FileResource();
+            totalBirths(fr);
+        
+    }
+    
+            
+}
